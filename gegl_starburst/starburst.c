@@ -59,9 +59,9 @@ property_double (c_y, _("Offset Y"), 0.5)
     ui_meta     ("unit", "relative-coordinate")
     ui_meta     ("axis", "y")
 
-property_int  (radius, _("Remove the 1 pixel line artifact"), 1)
-  value_range (0, 1)
-  ui_range    (0, 1)
+property_int  (radius, _("Remove the 1 pixel line artifact"), 2)
+  value_range (0, 2)
+  ui_range    (0, 2)
   ui_meta     ("unit", "pixel-distance")
   description (_("It is on by default but you can turn it off to make the filter faster"))
 
