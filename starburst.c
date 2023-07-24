@@ -180,6 +180,8 @@ gegl_op_class_init (GeglOpClass *klass)
     "reference-hash", "45ed16360128agbr25493xc254001b2ac",
     "description", _("Make a starburst using GEGL "
                      ""),
+    "gimp:menu-path", "<Image>/Filters/Render/Fun",
+    "gimp:menu-label", _("Starburst..."),
     NULL);
 }
 
