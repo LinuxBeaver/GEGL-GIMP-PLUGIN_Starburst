@@ -60,5 +60,6 @@ ninja -C build
 Restart Gimp and go to GEGL Operations Drop Down List and look for "star background". 
 If you use Gimp 2.99.16+ go to filters>render>fun or just search for it.
 
-## A similar plugin to this is here, also, a worthy mention of Gimp's Spiral filter.
+## A similar plugin to this is here
 https://github.com/LinuxBeaver/Gimp_Plugin_Star_Background/releases/tag/StarBackgroundGimpPlugin
+also don't forget about Gimp's default spiral filter; which is also similar.
