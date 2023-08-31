@@ -2,6 +2,9 @@
 # gegl-starburst
 GEGL Starburst. A new GEGL filter that makes a quality movable starburst. 
 
+Download here.
+https://github.com/LinuxBeaver/gegl-starburst/releases
+
 ![image](https://github.com/LinuxBeaver/gegl-starburst/assets/78667207/100f559d-7f24-4a19-b643-a8737d14c22c)
 
 ## Location to put Binaries 
