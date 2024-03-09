@@ -139,14 +139,14 @@ static void attach (GeglOperation *operation)
                                   "operation", "gegl:median-blur",
                                   NULL);
 
-/*GEGL Crop is used to solve a potential bug that gegl:color has. It is a good faith practice to put them after gegl:color or any gegl render operation.*/
+/*GEGL Crop is used to solve a potential bug that gegl:color has. It is a good faith practice to put them after gegl:color or any render operation.*/
 
 /*This is a GEGL Graph of all the filters being called, normal blend mode, crop, kaleidoscope, behind blend mode, crop(again), median blur,*/
  gegl_node_link_many (input, over, crop, mirrors, dst, cropx, mb, output, NULL);
 /*Over is the NORMAL blend mode. The first color fill is blended with this. */
- gegl_node_connect_from (over, "aux", col, "output");
+ gegl_node_connect (over, "aux", col, "output");
 /*DST is the behind blend mode. The second color fill is blended with this. */
- gegl_node_connect_from (dst, "aux", col2, "output");
+ gegl_node_connect (dst, "aux", col2, "output");
 
 
 
