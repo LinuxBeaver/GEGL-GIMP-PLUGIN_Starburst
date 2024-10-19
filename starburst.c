@@ -76,7 +76,7 @@ property_double (c_y, _("Vertical (Y) movement"), 0.5)
     ui_meta     ("unit", "relative-coordinate")
     ui_meta     ("axis", "y")
 
-property_int  (radius, _("Remove the 1 pixel line artifact"), 1)
+property_int  (radius, _("Remove the 1 pixel line artifact"), 2)
   value_range (0, 2)
   ui_range    (0, 2)
   ui_meta     ("unit", "pixel-distance")
@@ -98,27 +98,17 @@ static void attach (GeglOperation *operation)
   node    = gegl_node_new_child (gegl,
                                   "operation", "gegl:node",
                                   NULL);  */
-  GeglNode *input, *output, *over, *dt1, *id1, *id2, *mirrors, *dst, *col, *col2, *mb, *dt2;
+  GeglNode *input, *output, *over, *crop, *mirrors, *dst, *col, *col2, *mb, *cropx;
 
   input    = gegl_node_get_input_proxy (gegl, "input");
   output   = gegl_node_get_output_proxy (gegl, "output");
 
-
-  id1    = gegl_node_new_child (gegl,
-                                  "operation", "gegl:nop",
+  crop    = gegl_node_new_child (gegl,
+                                  "operation", "gegl:crop",
                                   NULL);
 
-  id2    = gegl_node_new_child (gegl,
-                                  "operation", "gegl:nop",
-                                  NULL);
-
-
-  dt1    = gegl_node_new_child (gegl,
-                                  "operation", "gegl:distance-transform", 
-                                  NULL);
-
-  dt2    = gegl_node_new_child (gegl,
-                                  "operation", "gegl:distance-transform", 
+  cropx    = gegl_node_new_child (gegl,
+                                  "operation", "gegl:crop",
                                   NULL);
 
 
@@ -138,11 +128,11 @@ static void attach (GeglOperation *operation)
                                   NULL);
 
   col    = gegl_node_new_child (gegl,
-                                  "operation", "gegl:color-overlay",
+                                  "operation", "gegl:color",
                                   NULL);
 
   col2    = gegl_node_new_child (gegl,
-                                  "operation", "gegl:color-overlay",
+                                  "operation", "gegl:color",
                                   NULL);
 
  mb    = gegl_node_new_child (gegl,
@@ -152,14 +142,13 @@ static void attach (GeglOperation *operation)
 /*GEGL Crop is used to solve a potential bug that gegl:color has. It is a good faith practice to put them after gegl:color or any render operation.*/
 
 /*This is a GEGL Graph of all the filters being called, normal blend mode, crop, kaleidoscope, behind blend mode, crop(again), median blur,*/
- gegl_node_link_many (input, id1, over,  mirrors, id2, dst,  mb, output, NULL);
+ gegl_node_link_many (input, over, crop, mirrors, dst, cropx, mb, output, NULL);
 /*Over is the NORMAL blend mode. The first color fill is blended with this. */
  gegl_node_connect (over, "aux", col, "output");
- gegl_node_link_many (id1, dt1, col, NULL);
 /*DST is the behind blend mode. The second color fill is blended with this. */
  gegl_node_connect (dst, "aux", col2, "output");
- gegl_node_link_many (id2, dt2, col2, NULL);
-
+ gegl_node_connect (crop, "aux", input, "output");
+ gegl_node_connect (crop, "aux", input, "output");
 
 /*The three parts after (operation, are "defined_GUI_options", defined_operation_name, "operation_property");
 Operation properties (3rd) are the only objective thing here. That are based on a GEGL Operations property, IE gaussian-blur "std-dev-x" is the property. Users are free to enter whatever name they want for GUI Options and operation names (except "gegl" and "switch") for some reason are not allowed. there may be a few more oddball rejected names, I haven't found*/
