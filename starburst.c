@@ -98,10 +98,15 @@ static void attach (GeglOperation *operation)
   node    = gegl_node_new_child (gegl,
                                   "operation", "gegl:node",
                                   NULL);  */
-  GeglNode *input, *output, *over, *crop, *mirrors, *dst, *col, *col2, *mb, *cropx;
+  GeglNode *input,  *output, *over, *cropfinal, *crop, *mirrors, *dst, *col, *col2, *mb, *cropx;
 
   input    = gegl_node_get_input_proxy (gegl, "input");
   output   = gegl_node_get_output_proxy (gegl, "output");
+
+
+  cropfinal    = gegl_node_new_child (gegl,
+                                  "operation", "gegl:crop",
+                                  NULL);
 
   crop    = gegl_node_new_child (gegl,
                                   "operation", "gegl:crop",
@@ -142,13 +147,14 @@ static void attach (GeglOperation *operation)
 /*GEGL Crop is used to solve a potential bug that gegl:color has. It is a good faith practice to put them after gegl:color or any render operation.*/
 
 /*This is a GEGL Graph of all the filters being called, normal blend mode, crop, kaleidoscope, behind blend mode, crop(again), median blur,*/
- gegl_node_link_many (input, over, crop, mirrors, dst, cropx, mb, output, NULL);
+ gegl_node_link_many (input, over, crop, mirrors, dst, cropx, mb, cropfinal,  output, NULL);
 /*Over is the NORMAL blend mode. The first color fill is blended with this. */
  gegl_node_connect (over, "aux", col, "output");
 /*DST is the behind blend mode. The second color fill is blended with this. */
  gegl_node_connect (dst, "aux", col2, "output");
  gegl_node_connect (crop, "aux", input, "output");
- gegl_node_connect (crop, "aux", input, "output");
+ gegl_node_connect (cropx, "aux", input, "output");
+
 
 /*The three parts after (operation, are "defined_GUI_options", defined_operation_name, "operation_property");
 Operation properties (3rd) are the only objective thing here. That are based on a GEGL Operations property, IE gaussian-blur "std-dev-x" is the property. Users are free to enter whatever name they want for GUI Options and operation names (except "gegl" and "switch") for some reason are not allowed. there may be a few more oddball rejected names, I haven't found*/
