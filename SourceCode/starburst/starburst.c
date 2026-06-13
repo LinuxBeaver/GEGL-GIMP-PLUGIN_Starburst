@@ -44,7 +44,7 @@ property_color (col, _("Color of blinds"), "#01ff00")
 
 
 property_color (col2, _("Color of fill"), "#4f9500")
-    description (_("Sliding this color's alpha channel to transparent by left clicking the color fill and sliding the A slider to 0 will only preserve the ray."))
+    description (_("Sliding this colorꞌs alpha channel to transparent by left clicking the color fill and sliding the A slider to 0 will only preserve the ray."))
     ui_meta     ("role", "color-secondary")
 
 
@@ -157,7 +157,7 @@ static void attach (GeglOperation *operation)
 
 
 /*The three parts after (operation, are "defined_GUI_options", defined_operation_name, "operation_property");
-Operation properties (3rd) are the only objective thing here. That are based on a GEGL Operations property, IE gaussian-blur "std-dev-x" is the property. Users are free to enter whatever name they want for GUI Options and operation names (except "gegl" and "switch") for some reason are not allowed. there may be a few more oddball rejected names, I haven't found*/
+Operation properties (3rd) are the only objective thing here. That are based on a GEGL Operations property, IE gaussian-blur "std-dev-x" is the property. Users are free to enter whatever name they want for GUI Options and operation names (except "gegl" and "switch") for some reason are not allowed. there may be a few more oddball rejected names, I havenꞌt found*/
 
   gegl_operation_meta_redirect (operation, "col", col, "value");
   gegl_operation_meta_redirect (operation, "col2", col2, "value"); 
@@ -167,7 +167,7 @@ Operation properties (3rd) are the only objective thing here. That are based on 
   gegl_operation_meta_redirect (operation, "c_x", mirrors, "c-x");    
   gegl_operation_meta_redirect (operation, "c_y", mirrors, "c-y");   
   gegl_operation_meta_redirect (operation, "radius", mb, "radius");     
-/*I'm not happy with them names r-angle, m-angle ect.. set in mid 2022 but I don't want to change it as that will break presets.. These names were given by gegl:kaleidoscope in default. */
+/*Iꞌm not happy with them names r-angle, m-angle ect.. set in mid 2022 but I donꞌt want to change it as that will break presets.. These names were given by gegl:kaleidoscope in default. */
 }
 
 static void
